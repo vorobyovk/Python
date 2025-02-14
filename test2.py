@@ -1,26 +1,39 @@
+import pandas as pd
 import numpy as np
-a = np.array([[1, 2, 3], [4, 5, 6]], dtype=int)
-print(a) 
+import matplotlib.pyplot as plt
 
-b = np.array([[1, 3, 4], [3, 4, 5]], dtype=int)
-print(b) 
-print(b.itemsize)
+mountains_height = pd.Series([2061, 2035.8, 2028.5, 2022.5, 2016.4])
+print(mountains_height)
 
-c = np.ones((3,4), dtype=int)
-print(c)
+mountains_height_name = pd.Series(
+    data=[2061, 2035.8, 2028.5, 2022.5, 2016.4],
+    index=["Goverla", "Brebenskyl", "Pip_Ivan", "Petros", "Gutin_Tomnatik"],
+    name="Height, m",
+    dtype=float,
+)
+print(mountains_height_name)
+print(mountains_height_name["Goverla"])
+print(mountains_height > 2030)
 
-d = np.identity(3, dtype=int)
-print(d)
+sort_index = mountains_height_name.sort_values()
+print(sort_index)
 
-e = np.array([u"\u2211", u"\u220F"], dtype="U")
-print(e) 
+def square(x):
+    return x**2
 
-print(a + b)
-print(a.max())
+squared_height = mountains_height_name.apply(square)
+print(squared_height)
 
-f = a.T
-print(f)
+other_mountains = pd.Series([2001.1, 1998.4], index=['Rebra', 'Menchul'])
+all_mountains = pd.concat([mountains_height_name, other_mountains])
+print(all_mountains)
 
-j = np.matrix("1,0,3;-1,-1,2;4,7,2")
-j_inv = np.linalg.inv(j)
-print(j_inv)
+all_mountains.plot(kind='bar')   
+
+data = [[1, 'Alice'], [2, 'Bob']]
+df = pd.DataFrame(data, columns=['ID', 'Name'])
+
+data = {'ID': [1, 2], 'Name': ['Alice', 'Bob']}
+df = pd.DataFrame(data)
+print(df)
+print(df.shape)
