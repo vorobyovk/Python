@@ -100,21 +100,38 @@ import copy
 #         print(f"Original data type of key 2: {type(list(sample_data.keys())[1])}")
 #         print(f"Loaded data type of key 2: {type(list(loaded_data.keys())[1])}")
 
-class MyClass:
-    def __init__(self, value):
-        self.value = value
-    def __copy__(self):
-        print("Викликано __copy__")
-        return MyClass(self.value)
-    def __deepcopy__(self, memo=None):
-        print("Викликано __deepcopy__")
-        return MyClass(copy.deepcopy(self.value, memo))
-# Поверхневе копіювання
-obj = MyClass(5)
-obj_copy = copy.copy(obj)
-obj_copy.value = 10
-# Глибоке копіювання
-obj_deepcopy = copy.deepcopy(obj)
-obj_deepcopy.value = 20
-print(obj.value, obj_copy.value, obj_deepcopy.value)
+# class MyClass:
+#     def __init__(self, value):
+#         self.value = value
+#     def __copy__(self):
+#         print("Викликано __copy__")
+#         return MyClass(self.value)
+#     def __deepcopy__(self, memo=None):
+#         print("Викликано __deepcopy__")
+#         return MyClass(copy.deepcopy(self.value, memo))
+# # Поверхневе копіювання
+# obj = MyClass(5)
+# obj_copy = copy.copy(obj)
+# obj_copy.value = 10
+# # Глибоке копіювання
+# obj_deepcopy = copy.deepcopy(obj)
+# obj_deepcopy.value = 20
+# print(obj.value, obj_copy.value, obj_deepcopy.value)
+
+# class UserSettings:
+#     def __init__(self, preferences, large_data_reference):
+#         self.preferences = preferences
+#         self.large_data_reference = large_data_reference
+#     def __deepcopy__(self, memo):
+#         print("Кастомізоване глибоке копіювання для UserSettings")
+#         # Припустимо, що preferences - це невеликий словник, який можна безпечно скопіювати,
+#         # а large_data_reference - це посилання на великий об'єкт даних, яке ми не хочемо дублювати.
+#         new_preferences = copy.deepcopy(self.preferences, memo)
+#         # Передаємо посилання на ті ж великі дані замість їх копіювання
+#         new_obj = UserSettings(new_preferences, self.large_data_reference)
+#         return new_obj
+# # Створення екземпляра UserSettings
+# original_settings = UserSettings({"language": "uk"}, large_data_reference="LargeDataID")
+# # Глибоке копіювання з кастомізованою логікою
+# settings_copy = copy.deepcopy(original_settings)
 
