@@ -72,5 +72,3 @@ if __name__ == "__main__":
     for t in time_points:
         final_prices = simulate_n_times(num_simulations, t)
         plot_histogram_and_test_normality(final_prices, t, num_simulations)
-
-    print("\nЗробіть висновки про зміну розподілу зі збільшенням t, аналізуючи отримані гістограми та результати тестів на нормальність.")
