@@ -7,8 +7,8 @@ from scipy.stats import shapiro, kstest, norm
 url = 'https://docs.google.com/spreadsheets/d/18WCpPS96Tb3cB0FCsIA92PEhcmBkp08sjYhS9DsQfJE/export?format=csv'
 df = pd.read_csv(url)
 
-# Виключення колонки 'Product_Sold' зі списку колонок для аналізу
-columns_to_analyze = [col for col in df.columns if col != 'Product_Sold']
+# Виконуємо аналіз для всіх колонок
+columns_to_analyze = df.columns
 
 # Функція для перевірки на нормальність
 def test_normality(data, column_name):
@@ -47,14 +47,19 @@ for column in columns_to_analyze:
         mean_val = np.mean(data)
         variance_val = np.var(data)
         std_dev_val = np.std(data)
-        correlation_val = df[column].corr(df['Product_Sold'])
+        # Обчислення кореляції тільки якщо є інші числові стовпці для порівняння
+        if len(df.select_dtypes(include=np.number).columns) > 1 and column != 'Product_Sold':
+            correlation_val = df[column].corr(df['Product_Sold'])
+        else:
+            correlation_val = None
 
         print(f"\n--- Аналіз колонки '{column}' ---")
         print(f"Середнє значення: {mean_val:.2f}")
         print(f"Дисперсія: {variance_val:.2f}")
         print(f"Стандартне відхилення: {std_dev_val:.2f}")
-        print(f"Кореляція з 'Product_Sold': {correlation_val:.2f}")
 
+        if correlation_val is not None:
+            print(f"Кореляція з 'Product_Sold': {correlation_val:.2f}")
         # Побудова гістограми
         plt.figure(figsize=(8, 6))
         plt.hist(data, bins='auto', edgecolor='black')
